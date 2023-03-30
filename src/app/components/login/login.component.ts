@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit{
 
   onSubmit() {
     console.log("valid")
-    this.loginService.login("5@gmail.com", "123456789").subscribe(
+    this.loginService.login("5@gmail.com", "12356789").subscribe(
       token => {
         console.log(token);
       }
@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit{
 
   onSubmit2() {
     //print localstorage user
-    console.log(localStorage.getItem('user'));
+    this.loginService.checkToken("").subscribe(
+      valid => {
+        console.log(valid);
+      }
+    );
   }
 }

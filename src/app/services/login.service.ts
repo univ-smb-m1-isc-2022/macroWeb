@@ -39,8 +39,8 @@ export class LoginService {
   }
   */
 
-  private saveUser(user: String) {
-    localStorage.removeItem('user');
-    localStorage.setItem('user', JSON.stringify(user));
+  checkToken(token: string): Observable<boolean> {
+    const body = {token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1QGdtYWlsLmNvbSIsImlhdCI6MTY4MDE4NTYyNywiZXhwIjoxNjgwMzI5NjI3fQ.zI3bnwRcImUuyoiLhLNWtm_qDTqSganeM1G8sfNpGTk"};
+    return this.httpClient.post<boolean>(`http://127.0.0.1:8080/api/v1/auth/check`, body, requestOptions);
   }
 }
