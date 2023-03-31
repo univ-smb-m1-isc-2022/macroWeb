@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./components/login/login.component";
+import {HomeComponent} from "./components/home/home.component";
+import {AuthGuard} from "./helpers/auth.guard";
+import {homeGuard} from "./helpers/home.guard";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [homeGuard ] },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

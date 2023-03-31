@@ -15,12 +15,27 @@ export class LoginComponent implements OnInit{
   constructor(private loginService : LoginService) { }
 
   onSubmit() {
-    console.log("valid")
-    this.loginService.login("5@gmail.com", "12356789").subscribe(
-      token => {
-        console.log(token);
+    this.loginService.login("5@gmail.com", "123456789").then(
+      data => {
+        if (data != null) {
+          let myData = JSON.parse(JSON.stringify(data));
+          localStorage.setItem("token", myData.token);
+          localStorage.setItem("email", myData.email);
+        }
+
       }
     );
+    /*
+    if (this.formGroup.invalid) {
+      this.loginService.login("5@gmail.com", "123456789").then(
+        data => {
+          if (data != null) {
+            console.log(data[0]);
+          }
+        });
+    }*/
+
+
   }
   ngOnInit(): void {
     this.formGroup = new FormGroup({
@@ -31,10 +46,8 @@ export class LoginComponent implements OnInit{
 
   onSubmit2() {
     //print localstorage user
-    this.loginService.checkToken("").subscribe(
-      valid => {
-        console.log(valid);
-      }
-    );
+    console.log(localStorage.getItem("email"));
+    console.log(localStorage.getItem("token"));
+
   }
 }
