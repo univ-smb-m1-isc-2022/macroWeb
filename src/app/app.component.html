@@ -1,1 +1,15 @@
-<router-outlet></router-outlet>
+<div class="wrapper">
+  <nav class="navbar">
+    <a class="logo" routerLink="/">Macro Calculator</a>
+    <ul class="nav-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/daily">Menu</a></li>
+      <li><a routerLink="/weight">Weight</a></li>
+    </ul>
+  </nav>
+  <div class="content">
+    <router-outlet></router-outlet>
+
+  </div>
+</div>
+

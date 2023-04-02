@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,23 @@ import {LoginService} from "../../services/login.service";
 export class LoginComponent implements OnInit{
 
   formGroup!: FormGroup;
+  userData$!: Observable<any>;
 
   constructor(private loginService : LoginService) { }
 
   onSubmit() {
-    this.loginService.login("5@gmail.com", "123456789").then(
-      data => {
-        if (data != null) {
-          let myData = JSON.parse(JSON.stringify(data));
-          localStorage.setItem("token", myData.token);
-          localStorage.setItem("email", myData.email);
-        }
+    this.userData$ = this.loginService.loginObs({"email": "5@gmail.com", password: 12356789})
 
-      }
-    );
+
+
+    this.userData$.subscribe(data => {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("email", data.email);
+    })
+
+    console.log(this.userData$)
+
+
     /*
     if (this.formGroup.invalid) {
       this.loginService.login("5@gmail.com", "123456789").then(
@@ -34,6 +38,7 @@ export class LoginComponent implements OnInit{
           }
         });
     }*/
+
 
 
   }

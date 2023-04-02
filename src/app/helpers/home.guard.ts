@@ -13,6 +13,9 @@ export class homeGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
+    if (localStorage.getItem("token") == null) {
+      return true;
+    }
     return this.loginService.checkToken(localStorage.getItem("token")!).then(
       data => {
         if (data != null) {

@@ -30,7 +30,12 @@ export class LoginService {
   login(email: string, password: string): Promise<string | undefined> {
 
     const body = { email: email, password: password };
-    return this.httpClient.post<string>(`http://127.0.0.1:8080/api/v1/auth/authenticate`, body, requestOptions).toPromise();
+    return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/authenticate`, body, requestOptions).toPromise();
+  }
+
+  //do the same login request but with observable
+  loginObs(data:any): Observable<string> {
+    return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/authenticate`, data, requestOptions);
   }
 
   /*
