@@ -8,15 +8,16 @@
 <button mat-button (click)="addMenu()">Get Name</button>
 
 <div>
+<div>
   {{nutrition.calories}}
   {{nutrition.carbs}}
   {{nutrition.lipids}}
   {{nutrition.protein}}
 
 </div>
-<div *ngFor="let dataSourceMenu of dataSourceMenus" class="container">
-  <h1>{{dataSourceMenu.name}}</h1>
-  <button mat-button (click)="addFood(dataSourceMenu.id)">Ajouter un aliment</button>
+<div id="menuBox" *ngFor="let dataSourceMenu of dataSourceMenus" class="container">
+  <h1 id="menuBoxTitle">{{dataSourceMenu.name}}</h1>
+  <button id="menuBoxAddFoodButton" mat-button (click)="addFood(dataSourceMenu.id)">Ajouter un aliment</button>
   <table #table mat-table [dataSource]="dataSourceMenu.foods" class="mat-elevation-z8 demo-table">
 
     <!-- Name Column -->
@@ -62,10 +63,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
   </table>
-  <div *ngIf="dataSourceMenu.totalNutrition != null">
+  <div id="menuTotalNutriment" *ngIf="dataSourceMenu.totalNutrition != null" class="menu-total-nutriment">
       <p>Calories : {{dataSourceMenu.totalNutrition.calories }}</p>
       <p>Protein : {{dataSourceMenu.totalNutrition.protein }}</p>
       <p>Lipids : {{dataSourceMenu.totalNutrition.lipids }}</p>
       <p>Carbs : {{dataSourceMenu.totalNutrition.carbs }}</p>
   </div>
+</div>
 </div>

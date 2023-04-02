@@ -49,7 +49,7 @@ export class AddFoodComponent implements OnInit{
     const quantity = this.quantityInput.nativeElement.value;
     //get food id from chip
 
-    console.log('Quantity:', this.dataMenuId);
+    console.log('Quantity:', quantity);
     let item =
       {
         "quantity":  quantity,
