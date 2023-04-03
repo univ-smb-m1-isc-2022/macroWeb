@@ -1,14 +1,19 @@
+<h1 mat-dialog-title> Ajouter de la nourriture</h1>
+
+<mat-dialog-content>
 <mat-form-field>
   <mat-label>Enter your name</mat-label>
   <input matInput #nameInput>
 </mat-form-field>
 <button mat-button (click)="getFoodListBYName()">Get Name</button>
 
-<mat-chip-listbox #chiplist *ngIf="foodList != null">
-  <mat-chip *ngFor="let item of foodList"  (click)="ShowFood(item)">
-    {{item.name}}
-  </mat-chip>
-</mat-chip-listbox>
+<mat-form-field *ngIf="options.length != 0">
+  <mat-select placeholder="Select an option" [formControl]="myControl" (selectionChange)="onSelectionChange($event)">
+    <mat-option *ngFor="let option of options | filter: searchValue" [value]="option">
+      {{ option.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
 <mat-form-field>
   <mat-label>Enter your quantity</mat-label>
@@ -16,3 +21,4 @@
 </mat-form-field>
 <button mat-button (click)="addFood()">Add Food</button>
 
+</mat-dialog-content>

@@ -25,6 +25,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatChipsModule} from "@angular/material/chips";
 import {CommonModule} from "@angular/common";
 import {AddFoodComponent} from "./components/daily/foodDialog/addFood.component";
+import {MatSelectModule} from "@angular/material/select";
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -34,29 +36,31 @@ import {AddFoodComponent} from "./components/daily/foodDialog/addFood.component"
     WeightComponent,
     DailyComponent,
     menuChoiceComponent,
-    AddFoodComponent
+    AddFoodComponent,
+    FilterPipe
 
   ],
-  imports: [
-    HttpClientModule,
-    CommonModule,
-    BrowserModule,
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    NgChartsModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatIconModule,
-    MatGridListModule,
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatInputModule,
-    MatChipsModule
-  ],
+    imports: [
+        HttpClientModule,
+        CommonModule,
+        BrowserModule,
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        NgChartsModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        MatIconModule,
+        MatGridListModule,
+        MatSidenavModule,
+        MatListModule,
+        MatToolbarModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatInputModule,
+        MatChipsModule,
+        MatSelectModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

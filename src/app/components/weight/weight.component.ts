@@ -8,7 +8,13 @@ import {Chart} from "chart.js";
 })
 export class WeightComponent implements OnInit{
   public chart: any;
+  public dateLabels: any = [];
+  public weightList: any = [];
   ngOnInit(): void {
+    this.dateLabels = ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
+      '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ]
+    this.weightList = ['467','576', '572', '79', '92',
+      '574', '573', '576']
     this.createChart();
   }
 
@@ -18,20 +24,12 @@ export class WeightComponent implements OnInit{
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-          '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ],
+        labels: this.dateLabels,
         datasets: [
           {
-            label: "Sales",
-            data: ['467','576', '572', '79', '92',
-              '574', '573', '576'],
+            label: "Weight",
+            data: this.weightList,
             backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-              '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
           }
         ]
       },

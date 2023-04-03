@@ -37,7 +37,7 @@ export class DailyComponent implements OnInit{
 
   }
 
-  displayedColumns2: string[] = ["name",'calories_for100g', 'carbs', 'lipids', 'protein', 'type','action'];
+  displayedColumns2: string[] = ["name",'quantity','calories_for100g', 'carbs', 'lipids', 'protein', 'type','action'];
   dataSourceMenus :any= []
   constructor(
     private menuService: MenuServiceService,
@@ -50,14 +50,12 @@ export class DailyComponent implements OnInit{
 
   test(idList: any[]) {
     for (let i = 0; i < idList.length; i++) {
-      console.log(idList[i].id)
       this.menuService.getMenuWithFood(idList[i].id).subscribe(
-
         data => {
+
           let dataParse = JSON.parse(JSON.stringify(data));
-          console.log("size" + dataParse[0])
+          console.log("test :"+data.food)
           if (dataParse[0] == null) {
-            console.log("No data");
             this.dataSourceMenus.push({id: idList[i].id, name: idList[i].name, foods: []});
           }
           else {
@@ -69,12 +67,13 @@ export class DailyComponent implements OnInit{
                 protein: 0
               }
             let dataParse = JSON.parse(JSON.stringify(data));
-            console.log(dataParse)
             let foodList = [];
             let menuItem:any= {id: dataParse[0].menu.id ,name : dataParse[0].menu.name, foods: []}
 
+
             for (let i = 0; i < dataParse.length; i++) {
-              let quantity = dataParse[0].quantity;
+              console.log("nourriture : "+ dataParse[i].food.caloriesFor100g)
+              let quantity = dataParse[i].quantity;
               totalNutrition.calories += ((dataParse[i].food.caloriesFor100g  )/100*quantity);
               totalNutrition.carbs += ((dataParse[i].food.carbs)/100*quantity);
               totalNutrition.lipids += ((dataParse[i].food.lipids)/100*quantity);
@@ -84,12 +83,12 @@ export class DailyComponent implements OnInit{
                 {
                   relationId : dataParse[i].id,
                   name: dataParse[i].food.name,
+                  quantity: quantity,
                   calories: ((dataParse[i].food.caloriesFor100g  )/100*quantity).toFixed(1),
                   carbs: ((dataParse[i].food.carbs)/100*quantity).toFixed(1),
                   lipids: ((dataParse[i].food.lipids)/100*quantity).toFixed(1),
                   protein: ((dataParse[i].food.protein)/100*quantity).toFixed(1),
                   type: dataParse[i].food.type,
-                  quantity: quantity
                 }
               foodList.push(item);
             }
@@ -98,7 +97,6 @@ export class DailyComponent implements OnInit{
             this.nutrition.lipids -= totalNutrition.lipids;
             this.nutrition.protein -= totalNutrition.protein;
 
-            console.log(totalNutrition)
             menuItem.foods =foodList;
             menuItem.totalNutrition = totalNutrition;
 
@@ -144,14 +142,11 @@ export class DailyComponent implements OnInit{
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
 
       result.menu.id = id;
-      console.log("menu : "+result.menu.id)
-      console.log("food : "+result.food.id)
+
       this.menuService.addFoodToMenu(result).subscribe(
         data => {
-          console.log(data);
         }
       )
       setTimeout(() => {
@@ -166,7 +161,6 @@ export class DailyComponent implements OnInit{
   deleteFood(relation: any) {
     this.menuService.deleteMenuFoodWithId(relation).subscribe(
       data => {
-        console.log(data);
       }
     )
 
@@ -192,7 +186,6 @@ export class DailyComponent implements OnInit{
     )
       setTimeout(() => {
 
-        console.log(this.menuIdList)
         this.cdr.detectChanges();
         this.dataSourceMenus = [];
         this.test(this.menuIdList)

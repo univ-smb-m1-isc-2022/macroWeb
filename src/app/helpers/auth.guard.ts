@@ -14,22 +14,29 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    return this.loginService.checkToken(localStorage.getItem("token")!).then(
-      data => {
-        if (data != null) {
-          let myData = JSON.parse(JSON.stringify(data));
-          if (myData.valid) {
-            return true;
-          }
-          else {
+      if (localStorage.getItem("token") == null) {
+        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+        return false;
+      }
+      else {
+        return this.loginService.checkToken(localStorage.getItem("token")!).then(
+          data => {
+            if (data != null) {
+              let myData = JSON.parse(JSON.stringify(data));
+              if (myData.valid) {
+                return true;
+              }
+              else {
+                this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+                return false
+              }
+            }
             this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
             return false
           }
-        }
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-        return false
+        );
       }
-    );
+
   }
 
 
