@@ -27,6 +27,7 @@ import {CommonModule} from "@angular/common";
 import {AddFoodComponent} from "./components/daily/foodDialog/addFood.component";
 import {MatSelectModule} from "@angular/material/select";
 import { FilterPipe } from './pipes/filter.pipe';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     DailyComponent,
     menuChoiceComponent,
     AddFoodComponent,
-    FilterPipe
+    FilterPipe,
+    ProfileComponent
 
   ],
     imports: [

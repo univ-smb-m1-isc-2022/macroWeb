@@ -4,21 +4,27 @@
 </mat-form-field>
 <button mat-button (click)="getMenuListBYName()">Get Name</button>
 
-<mat-chip-listbox #chiplist *ngIf="menuList != null">
-  <mat-chip *ngFor="let item of menuList"  (click)="showMenu(item)">
-    {{item['name']}}
-  </mat-chip>
-</mat-chip-listbox>
+<mat-form-field *ngIf="options.length != 0">
+  <mat-select placeholder="Select an option" [formControl]="myControl" (selectionChange)="onSelectionChange($event)">
+    <mat-option *ngFor="let option of options | filter: searchValue" [value]="option">
+      {{ option.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
 
 <p *ngIf="!isMenuSelected">Select a menu  </p>
-<table  #table mat-table [dataSource]="dataSources" class="mat-elevation-z8 demo-table">
-
-  <button mat-button (click)="addFoodToMenu()">Add Menu</button>
-
+<table #table mat-table [dataSource]="dataSources" class="mat-elevation-z8 demo-table">
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell *matCellDef="let element">{{element.name}}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef>quantity</th>
+    <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
   </ng-container>
 
   <!-- Weight Column -->
