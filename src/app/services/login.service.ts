@@ -30,21 +30,21 @@ export class LoginService {
   login(email: string, password: string): Promise<string | undefined> {
 
     const body = { email: email, password: password };
-    return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/authenticate`, body, requestOptions).toPromise();
+    return this.httpClient.post<string>(environment.apiKey+ `/auth/authenticate`, body, requestOptions).toPromise();
   }
 
   //do the same login request but with observable
   loginObs(data:any): Observable<string> {
-    return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/authenticate`, data, requestOptions);
+    return this.httpClient.post<string>(environment.apiKey+ `/auth/authenticate`, data, requestOptions);
   }
 
 
   register(body : any): Observable<string> {
-    return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/register`, body);
+    return this.httpClient.post<string>(environment.apiKey+ `/auth/register`, body);
   }
 
   checkToken(token: string): Promise<boolean | undefined> {
     const body = {token: token};
-    return this.httpClient.post<boolean>(`http://127.0.0.1:8080/api/v1/auth/check`, body, requestOptions).toPromise();
+    return this.httpClient.post<boolean>(environment.apiKey+ `/auth/check`, body, requestOptions).toPromise();
   }
 }

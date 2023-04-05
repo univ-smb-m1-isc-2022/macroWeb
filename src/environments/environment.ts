@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiKey: 'localhost:8080/api/v1'
+  apiKey: 'http://localhost:8080/api/v1'
 };

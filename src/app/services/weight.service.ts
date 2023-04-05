@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,10 @@ export class WeightService {
   constructor(private httpClient:HttpClient) { }
 
   getWeightWithId(id : any) : Observable<any> {
-    return this.httpClient.get('http://localhost:8080/api/v1/weight/' + id);
+    return this.httpClient.get(environment.apiKey+ '/weight/' + id);
   }
 
   addWeight(data : any) : Observable<any> {
-    return this.httpClient.post('http://localhost:8080/api/v1/weight', data);
+    return this.httpClient.post(environment.apiKey+ '/weight', data);
   }
 }

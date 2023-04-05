@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,27 @@ export class MenuServiceService {
 
   //get request as observable
   getMenu() : Observable<Object> {
-    return this.httpClient.get('http://localhost:8080/api/v1/demo-controller');
+    return this.httpClient.get(environment.apiKey+ '/demo-controller');
   }
 
   getMenuWithFood(menuId : number) : Observable<any> {
-    return this.httpClient.get('http://localhost:8080/api/v1/menu_food/menu/' + menuId);
+    return this.httpClient.get(environment.apiKey+ '/menu_food/menu/' + menuId);
   }
 
   deleteMenuFoodWithId(relationId : number) : Observable<any> {
-    return this.httpClient.delete('http://localhost:8080/api/v1/menu_food/menu/' + relationId);
+    return this.httpClient.delete(environment.apiKey+ '/menu_food/menu/' + relationId);
   }
 
   getMenuWithNameStartsWith(name : string) : Observable<any> {
-    return this.httpClient.get('http://localhost:8080/api/v1/menu/startingWith?startingChar=' + name);
+    return this.httpClient.get(environment.apiKey+ '/menu/startingWith?startingChar=' + name);
   }
 
   addFoodToMenu(data :any) : Observable<any> {
-    return this.httpClient.post('http://localhost:8080/api/v1/menu_food', data);
+    return this.httpClient.post(environment.apiKey+ '/menu_food', data);
   }
 
   addMenu(data :any) : Observable<any> {
-    return this.httpClient.post('http://localhost:8080/api/v1/menu', data);
+    return this.httpClient.post(environment.apiKey+ '/menu', data);
   }
 
 
