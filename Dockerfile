@@ -1,2 +1,2 @@
 FROM nginx:alpine
-COPY /dist/macroweb /usr/share/nginx/html
+COPY /dist/macroWeb /usr/share/nginx/html
