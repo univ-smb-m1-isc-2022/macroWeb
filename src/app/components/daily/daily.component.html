@@ -1,37 +1,46 @@
-<button mat-button color="warn" (click)="importMenu()">Import Menu</button>
+<div class="container">
+  <div class="import-container">
+    <button mat-raised-button (click)="importMenu()">Import Menu</button>
+  </div>
 
-<mat-form-field>
-  <mat-label>Enter your Menu Name</mat-label>
-  <input matInput #menuNameInput>
-</mat-form-field>
-<button mat-button (click)="addMenu()">Get Name</button>
+  <div class="form-container">
+    <mat-form-field>
+      <mat-label>Enter your Menu Name</mat-label>
+      <input matInput #menuNameInput>
+    </mat-form-field>
+    <button mat-raised-button (click)="addMenu()">Create Menu</button>
+  </div>
+</div>
 
 <div>
-  <div class="box">
-    <label class="label">Calories:</label>
-    <span class="value">{{nutrition.calories}}</span>
+  <div class="box-container">
+    <div class="box">
+      <label class="label">Calories: </label>
+      <span class="value">{{nutrition.calories.toFixed(1)}}</span>
+    </div>
+
+    <div class="box">
+      <label class="label">Prot: </label>
+      <span class="value">{{nutrition.protein.toFixed(1)}}</span>
+    </div>
+
+    <div class="box">
+      <label class="label">Carbs: </label>
+      <span class="value">{{nutrition.carbs.toFixed(1)}}</span>
+    </div>
+
+    <div class="box">
+      <label class="label">Lipids: </label>
+      <span class="value">{{nutrition.lipids.toFixed(1)}}</span>
+    </div>
   </div>
 
-  <div class="box">
-    <label class="label">Prot:</label>
-    <span class="value">{{nutrition.protein}}</span>
-  </div>
-
-  <div class="box">
-    <label class="label">Carbs:</label>
-    <span class="value">{{nutrition.carbs}}</span>
-  </div>
-
-  <div class="box">
-    <label class="label">Lipids:</label>
-    <span class="value">{{nutrition.lipids}}</span>
-  </div>
 
   <div>
 
 
   </div>
-  <div id="menuBox" *ngFor="let dataSourceMenu of dataSourceMenus" class="container">
+  <div id="menuBox" *ngFor="let dataSourceMenu of dataSourceMenus" class="container-table">
     <h1 id="menuBoxTitle">{{dataSourceMenu.name}}</h1>
     <button id="menuBoxAddFoodButton" mat-button (click)="addFood(dataSourceMenu.id)">Ajouter un aliment</button>
     <table #table mat-table [dataSource]="dataSourceMenu.foods" class="mat-elevation-z8 demo-table">
@@ -85,10 +94,26 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
     </table>
     <div id="menuTotalNutriment" *ngIf="dataSourceMenu.totalNutrition != null" class="menu-total-nutriment">
-      <p>Calories : {{dataSourceMenu.totalNutrition.calories }}</p>
-      <p>Protein : {{dataSourceMenu.totalNutrition.protein }}</p>
-      <p>Lipids : {{dataSourceMenu.totalNutrition.lipids }}</p>
-      <p>Carbs : {{dataSourceMenu.totalNutrition.carbs }}</p>
+      <div class="box">
+        <label class="label">Calories:</label>
+        <span class="value"> {{dataSourceMenu.totalNutrition.calories.toFixed(1) }}</span>
+      </div>
+
+      <div class="box">
+        <label class="label">Prot:</label>
+        <span class="value"> {{dataSourceMenu.totalNutrition.protein.toFixed(1) }}</span>
+      </div>
+
+      <div class="box">
+        <label class="label">Carbs:</label>
+        <span class="value"> {{dataSourceMenu.totalNutrition.carbs.toFixed(1) }}</span>
+      </div>
+
+      <div class="box">
+        <label class="label">Lipids:</label>
+        <span class="value"> {{dataSourceMenu.totalNutrition.lipids.toFixed(1) }}</span>
+      </div>
+
     </div>
   </div>
 </div>

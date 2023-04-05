@@ -13,7 +13,8 @@ export class RegisterComponent {
   userData$!: Observable<any>;
   registerForm!: FormGroup;
 
-  objectives = ['Maintenir Poids', 'Perte Gras', 'Prise de Masse'];
+  objectives = ['Maintenir Poids', 'Perte Gras', 'Prise de Muscle'];
+
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router:Router) { }
 
@@ -33,7 +34,7 @@ export class RegisterComponent {
       console.log('Invalid form')
       return;
     }
-    let TransformedObjective;
+    let TransformedObjective :any;
     if (this.registerForm.value.objective == 'Maintenir Poids') {
       TransformedObjective = 'MAINTAIN_WEIGHT'
     }
@@ -43,6 +44,7 @@ export class RegisterComponent {
     if (this.registerForm.value.objective == 'Prise de Muscle') {
       TransformedObjective = 'GAIN_MUSCLE'
     }
+    console.log("TransformedObjective: " + TransformedObjective)
     let body = {
       "firstname": this.registerForm.value.firstName,
       "lastname": this.registerForm.value.lastName,
@@ -54,11 +56,12 @@ export class RegisterComponent {
     console.log(this.registerForm.value);
     this.userData$ = this.loginService.register(body);
     this.userData$.subscribe(data => {
+      console.log("objetive dada " + data.objective)
         localStorage.setItem("token", data.token);
         localStorage.setItem("email", data.email);
         localStorage.setItem("id", data.id);
         localStorage.setItem("size", data.size);
-        localStorage.setItem("objective", data.objective);
+        localStorage.setItem("objective", data.objective)
       this.router.navigate(['home']);
       }
     )

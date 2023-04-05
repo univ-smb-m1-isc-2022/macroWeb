@@ -21,4 +21,10 @@
 </mat-form-field>
 <button mat-button (click)="addFood()">Add Food</button>
 
+  <div *ngIf="recommendedFoodList != null" class="food-list">
+    <div class="food-item" *ngFor="let food of recommendedFoodList">
+      {{ food }}
+    </div>
+  </div>
+
 </mat-dialog-content>

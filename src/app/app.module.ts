@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
-import { HomeComponent } from './components/home/home.component';
 import { WeightComponent } from './components/weight/weight.component';
 import {NgChartsModule} from "ng2-charts";
 import { DailyComponent } from './components/daily/daily.component';
@@ -27,45 +27,71 @@ import {CommonModule} from "@angular/common";
 import {AddFoodComponent} from "./components/daily/foodDialog/addFood.component";
 import {MatSelectModule} from "@angular/material/select";
 import { FilterPipe } from './pipes/filter.pipe';
-import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider, GoogleSigninButtonModule,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from "@abacritt/angularx-social-login";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     WeightComponent,
     DailyComponent,
     menuChoiceComponent,
     AddFoodComponent,
     FilterPipe,
-    ProfileComponent,
     RegisterComponent
 
   ],
-    imports: [
-        HttpClientModule,
-        CommonModule,
-        BrowserModule,
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        NgChartsModule,
-        BrowserAnimationsModule,
-        MatTableModule,
-        MatIconModule,
-        MatGridListModule,
-        MatSidenavModule,
-        MatListModule,
-        MatToolbarModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatInputModule,
-        MatChipsModule,
-        MatSelectModule
-    ],
+  imports: [
+    SocialLoginModule,
+    HttpClientModule,
+    CommonModule,
+    BrowserModule,
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgChartsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatIconModule,
+    MatGridListModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatInputModule,
+    MatChipsModule,
+    MatSelectModule,
+    GoogleSigninButtonModule
+  ],
   providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '390781954954-p7kcl2j8au3i5lv0clt2orphpqvlk7eu.apps.googleusercontent.com'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('clientId')
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

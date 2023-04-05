@@ -14,3 +14,14 @@
 
   <button mat-raised-button color="primary" type="submit">Login</button>
 </form>
+
+
+<asl-google-signin-button *ngIf="!user"></asl-google-signin-button>
+
+<div *ngIf="user">
+  <img src="{{ user }}">
+  <div>
+    <h4>{{ user.name }}</h4>
+    <p>{{ user.email }}</p>
+  </div>
+</div>

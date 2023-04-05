@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {SocialAuthService} from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-login',
@@ -14,15 +15,17 @@ export class LoginComponent implements OnInit{
 
   loginForm!: FormGroup;
   userData$!: Observable<any>;
-
-  constructor(private fb: FormBuilder,private loginService : LoginService, private router: Router) { }
+  user: any;
+  loggedIn: any;
+  constructor(private authService:SocialAuthService, private fb: FormBuilder,private loginService : LoginService, private router: Router) { }
 
   onSubmit() {
-    this.userData$ = this.loginService.loginObs({"email": "5@gmail.com", password: 12356789})
     if (this.loginForm.invalid) {
       console.log('Invalid form')
       return;
     }
+    this.userData$ = this.loginService.loginObs({"email": this.loginForm.value.email, password: this.loginForm.value.password})
+
 
     this.userData$.subscribe(data => {
       localStorage.setItem("token", data.token);
@@ -30,7 +33,7 @@ export class LoginComponent implements OnInit{
       localStorage.setItem("id", data.id);
       localStorage.setItem("objective", data.objective);
       localStorage.setItem("size", data.size);
-      this.router.navigate(['home']);
+      this.router.navigate(['/']);
     })
 
     console.log(this.userData$)
@@ -39,6 +42,12 @@ export class LoginComponent implements OnInit{
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
+    });
+
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      console.log(user)
+      this.loggedIn = (user != null);
     });
   }
 

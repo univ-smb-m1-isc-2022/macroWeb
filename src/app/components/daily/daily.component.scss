@@ -1,13 +1,15 @@
 #menuBox{
   border: white solid 3px;
-  background: darkred;
+  background: #ffb584;
   margin: 50px;
 }
+
 #menuBoxTitle{
   text-align: center;
   border-bottom: white solid 3px;
   padding: 10px;
   font-size: 20px;
+  width: 100%;
   font-weight: bold;
 }
 
@@ -30,16 +32,64 @@
 }
 
 .box {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
   border: 1px solid #ccc;
   padding: 10px;
-  margin-right: 10px;
 }
+
+.box-container {
+  display: flex;
+  justify-content: center;
+}
+
 
 .label {
   font-weight: bold;
+  margin-right: 5px;
 }
 
 .value {
-  font-weight: normal;
+  font-size: 18px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px; /* or any other value you prefer */
+  margin: 0 auto; /* centers the container horizontally */
+}
+
+.container-table{
+  display: flex;
+  flex-direction: column;
+}
+.import-container {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.import-container button {
+  margin: 0;
+}
+
+.form-container {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.form-container mat-form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.form-container mat-form-field button {
+  margin-top: 10px;
 }

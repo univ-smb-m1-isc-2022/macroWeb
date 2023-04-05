@@ -8,7 +8,8 @@ import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-my-dialog',
-  templateUrl: './addFood.component.html'
+  templateUrl: './addFood.component.html',
+  styleUrls: ['./addFood.component.scss'],
 })
 export class AddFoodComponent implements OnInit{
   isMenuSelected = false;
@@ -20,13 +21,7 @@ export class AddFoodComponent implements OnInit{
   searchValue!: string;
   selectedOption!: any;
 
-
-  filter(value: string): string[] {
-    if (value) {
-      return this.options.filter(option => option.toLowerCase().includes(value.toLowerCase()));
-    }
-    return this.options;
-  }
+  recommendedFoodList:any = []
 
   ngOnInit() {
   }
@@ -36,6 +31,38 @@ export class AddFoodComponent implements OnInit{
     console.log(this.selectedOption)
     if (this.selectedOption != null) {
       this.isMenuSelected = true;
+      this.foodService.getRecommendedFood(this.selectedOption.id).subscribe(data => {
+        this.foodList = data;
+        if (data.length == 0){
+          return
+        }
+          console.log("data food" +data)
+
+      }
+      );
+      setTimeout(() => {
+          this.recommendedFoodList = []
+          for (let i = 0; i < this.foodList.length; i++) {
+            console.log("id food" +this.foodList[i])
+            this.foodService.getFoodWithId(this.foodList[i]).subscribe(data => {
+              this.recommendedFoodList.push(data);
+
+              }
+            );
+          }
+
+      }
+      , 100);
+
+      setTimeout(() => {
+        let temp = []
+        let parsed = JSON.parse(JSON.stringify(this.recommendedFoodList));
+        for (let i = 0; i < parsed.length; i++) {
+          temp.push(parsed[i][0].name)
+        }
+        this.recommendedFoodList = temp
+      }
+      , 1000);
     }
   }
 
@@ -45,9 +72,6 @@ export class AddFoodComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public dataMenuId: any
   ) {}
 
-  closeDialog() {
-    this.dialogRef.close('Thanks for using the dialog!');
-  }
 
   @ViewChild('chipList') chipList!: MatChipListbox;
   @ViewChild('nameInput', { static: true }) nameInput!: ElementRef;
@@ -61,7 +85,6 @@ export class AddFoodComponent implements OnInit{
     this.foodService.getFoodWithNameStartsWith(name).subscribe(data => {
       this.foodList = data;
       this.options =data
-        console.log(this.options)
     }
     );
   }

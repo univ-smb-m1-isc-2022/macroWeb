@@ -7,7 +7,7 @@ import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-my-dialog',
-  templateUrl: './menuChoice.component.html'
+  templateUrl: './menuChoice.component.html',
 })
 export class menuChoiceComponent implements OnInit{
   isMenuEmpty = true;
