@@ -38,12 +38,10 @@ export class LoginService {
     return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/authenticate`, data, requestOptions);
   }
 
-  /*
-  register(username: string, password: string): Observable<string> {
-    const body = { username: username, password: password };
-    return this.http.post<string>(`${this.apiUrl}/register`, body);
+
+  register(body : any): Observable<string> {
+    return this.httpClient.post<string>(`http://localhost:8080/api/v1/auth/register`, body);
   }
-  */
 
   checkToken(token: string): Promise<boolean | undefined> {
     const body = {token: token};

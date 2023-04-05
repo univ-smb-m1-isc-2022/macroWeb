@@ -1,5 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Chart} from "chart.js";
+import {WeightService} from "../../services/weight.service";
 
 @Component({
   selector: 'app-weight',
@@ -7,15 +9,39 @@ import {Chart} from "chart.js";
   styleUrls: ['./weight.component.scss']
 })
 export class WeightComponent implements OnInit{
+  constructor(private formBuilder: FormBuilder, private weightService: WeightService) {
+  }
+  weightForm!: FormGroup;
   public chart: any;
   public dateLabels: any = [];
   public weightList: any = [];
   ngOnInit(): void {
-    this.dateLabels = ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-      '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ]
-    this.weightList = ['467','576', '572', '79', '92',
-      '574', '573', '576']
-    this.createChart();
+
+    this.weightForm = this.formBuilder.group({
+      weight: ['', Validators.required]
+    });
+
+    this.updateChart()
+    //wait 0.5 seconds for the data to be loaded
+  }
+
+  updateChart(){
+    this.dateLabels = [];
+    this.weightList = [];
+    this.weightService.getWeightWithId(localStorage.getItem("id")).subscribe(data => {
+      console.log(data)
+      data.forEach((element: any) => {
+        this.dateLabels.push(element.createdAt)
+        this.weightList.push(element.weight)
+      });
+      setTimeout(() => {
+        if (this.chart){
+          this.chart.destroy();
+        }
+        this.createChart();
+        }
+        , 500);
+    })
   }
 
   createChart(){
@@ -40,4 +66,21 @@ export class WeightComponent implements OnInit{
     });
   }
 
+  onSubmit() {
+    if (this.weightForm.invalid) {
+      console.log('Invalid form')
+      return;
+    }
+    let idBody = {id: localStorage.getItem("id")}
+    let body = {
+      weight: this.weightForm.value.weight,
+      user : idBody
+    }
+    console.log(this.weightForm.value.weight);
+    this.weightService.addWeight(body).subscribe(data => {
+      console.log(data)
+      this.updateChart()
+    }
+    )
+  }
 }

@@ -5,14 +5,11 @@
       <li><a routerLink="/">Home</a></li>
       <li><a routerLink="/daily">Menu</a></li>
       <li><a routerLink="/weight">Weight</a></li>
-      <li><a routerLink="/profile">Profile</a></li>
-      <li><a routerLink="/login">logout</a></li>
+      <li><a (click)="logout()">logout</a></li>
     </ul>
   </nav>
   <div class="content">
-    <button (click)="onSubmit2()">Submit</button>
     <router-outlet></router-outlet>
-
   </div>
 </div>
 

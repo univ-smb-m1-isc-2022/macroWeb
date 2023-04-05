@@ -5,6 +5,7 @@ import {MenuServiceService} from "../../services/menu-service.service";
 import {MatDialog} from "@angular/material/dialog";
 import {menuChoiceComponent} from "./menuDialog/menuChoice.component";
 import {AddFoodComponent} from "./foodDialog/addFood.component";
+import {WeightService} from "../../services/weight.service";
 
 
 @Component({
@@ -34,13 +35,37 @@ export class DailyComponent implements OnInit{
 
 
   ngOnInit() {
+    this.weightService.getWeightWithId(localStorage.getItem("id")).subscribe(data => {
+      //get the last weight
+      let lastWeight = data[data.length-1].weight;
+      let size = Number(localStorage.getItem("size"));
+      console.log("last weight : "+lastWeight)
+      this.nutrition.calories = (lastWeight*9.6) + (1.8*180) - (4.7*20)
+      let objective = localStorage.getItem("objective");
+        console.log("objective : "+objective)
+      if (objective == "MAINTAIN_WEIGHT"){
+        this.nutrition.calories+=700;
+      }
+      else if (objective == "LOSE_FAT"){
+        this.nutrition.calories+=400;
+      }
+      else if (objective == "GAIN_MUSCLE"){
+        this.nutrition.calories+=1000;
+      }
 
+        this.nutrition.protein = parseInt(((this.nutrition.calories*0.25)/4).toFixed(1))
+        this.nutrition.lipids = parseInt(((this.nutrition.calories*0.2)/9).toFixed(1))
+        this.nutrition.carbs = parseInt(((this.nutrition.calories*0.55)/4).toFixed(1))
+      }
+
+    )
   }
 
   displayedColumns2: string[] = ["name",'quantity','calories_for100g', 'carbs', 'lipids', 'protein', 'type','action'];
   dataSourceMenus :any= []
   constructor(
     private menuService: MenuServiceService,
+    private weightService: WeightService,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef
   ){
@@ -48,7 +73,7 @@ export class DailyComponent implements OnInit{
 
 
 
-  test(idList: any[]) {
+  setTable(idList: any[]) {
     for (let i = 0; i < idList.length; i++) {
       this.menuService.getMenuWithFood(idList[i].id).subscribe(
         data => {
@@ -109,10 +134,6 @@ export class DailyComponent implements OnInit{
     }
 
   }
-  round (nombre: number, decimales: number): number {
-    const arrondi = Math.pow(10, decimales);
-    return Math.round(nombre * arrondi) / arrondi;
-  }
 
   importMenu() {
     const dialogRef = this.dialog.open(menuChoiceComponent, {
@@ -124,7 +145,7 @@ export class DailyComponent implements OnInit{
       }
       this.menuIdList.push(result);
       this.dataSourceMenus = [];
-      this.test(this.menuIdList);
+      this.setTable(this.menuIdList);
       this.cdr.detectChanges();
     });
   }
@@ -152,7 +173,7 @@ export class DailyComponent implements OnInit{
       setTimeout(() => {
         this.cdr.detectChanges();
         this.dataSourceMenus = [];
-        this.test(this.menuIdList)
+        this.setTable(this.menuIdList)
       }, 500);
 
     });
@@ -167,7 +188,7 @@ export class DailyComponent implements OnInit{
     setTimeout(() => {
       this.cdr.detectChanges();
       this.dataSourceMenus = [];
-      this.test(this.menuIdList)
+      this.setTable(this.menuIdList)
     }, 500);
 
   }
@@ -188,7 +209,7 @@ export class DailyComponent implements OnInit{
 
         this.cdr.detectChanges();
         this.dataSourceMenus = [];
-        this.test(this.menuIdList)
+        this.setTable(this.menuIdList)
       }, 100);
     }
   }

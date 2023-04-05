@@ -1,0 +1,38 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>First Name</mat-label>
+    <input matInput formControlName="firstName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Last Name</mat-label>
+    <input matInput formControlName="lastName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" type="password">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Objective</mat-label>
+    <mat-select formControlName="objective">
+      <mat-option *ngFor="let obj of objectives" [value]="obj">
+        {{ obj }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Weight</mat-label>
+    <input matInput type="number" formControlName="height" placeholder="Enter your Height">
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Save</button>
+
+  <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>
