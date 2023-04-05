@@ -27,7 +27,7 @@ jobs:
         run: npm run build --prod
 
       - name: Build Docker image
-        run: docker build -t macroweb .
+        run: docker build -t macroWeb .
 
       - name: Push to GitHub Packages of organization
         uses: docker/build-push-action@v1
@@ -35,5 +35,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: univ-smb-m1-isc-2022/macroweb/main
+          repository: univ-smb-m1-isc-2022/macroWeb/main
           tags: latest
