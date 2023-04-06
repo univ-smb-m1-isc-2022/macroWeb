@@ -10,7 +10,7 @@ import {RegisterComponent} from "./components/register/register.component";
 const routes: Routes = [
   { path: '', redirectTo: 'daily', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [homeGuard] },
-  { path: 'register', component: RegisterComponent},
+  { path: 'register', component: RegisterComponent, canActivate: [homeGuard]},
   { path : 'weight', component: WeightComponent, canActivate: [AuthGuard]},
   { path : 'daily', component : DailyComponent, canActivate: [AuthGuard]}
 ];

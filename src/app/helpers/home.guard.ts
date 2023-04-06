@@ -21,7 +21,7 @@ export class homeGuard implements CanActivate {
         if (data != null) {
           let myData = JSON.parse(JSON.stringify(data));
           if (myData.valid) {
-            this.router.navigate(['/home'], { queryParams: { returnUrl: state.url }});
+            this.router.navigate(['/'], { queryParams: { returnUrl: state.url }});
             return true;
           }
         }
